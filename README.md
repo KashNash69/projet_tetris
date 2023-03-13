@@ -14,5 +14,5 @@ CONSIGNE pour GIT :
  -vous modifier le fichier appartenant a votre branche dans le git et vous y coller les fonctions d'ajd 
  -dans git bash faire:
     -git add *le nom du fichier.ml*
-    -git commit -m "MAJ *date* prénoms*
+    -git commit -m "MAJ *date* prénoms* "
     -git push
