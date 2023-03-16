@@ -13,10 +13,10 @@ let test_convert_fonctional_1(status: t_test_status): unit =
   let test_step : t_test_step = test_start(status, "convert_fonctional_1")
   and p : t_point = {x = 2; y = 2} 
   and p_sorti : t_point = {x = 100; y = 100} in
-  let test_result : t_point t_test_result = test_exec(test_step, convert, (p, {x = 0; y = 0}, dilat)) in
+  let test_result : t_point t_test_result = test_exec(test_step, convert, (p, {x = 2; y = 2}, dilat)) in
   (
     if test_is_success(test_result)
-    then assert_equals(test_step, "carre (2;2)", test_get(test_result), p_sorti)
+    then assert_equals(test_step, "carre(2;2)", test_get(test_result), p_sorti)
     else test_error(test_step);
     test_end(test_step)
   )
@@ -217,7 +217,7 @@ let test_draw_pt_list_functional_1(status : t_test_status) : unit =
         fill_rect(50, 50, 10, 450);
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
-        draw_pt_list(pt_list,{x = 1; y = 1}, {x = 0; y = 0}, dilat, blue);
+        draw_pt_list(pt_list,{x = 1; y = 1}, {x = 0; y = 0}, dilat, black);
         print_string("Voyez vous trois carr� noir vide en ligne en (1;1) (oui/non)");
         let reponse_7 : string = read_line() in
         assert_equals(test_step, "carr� (1;2)", reponse_7, "oui")
@@ -259,6 +259,10 @@ let test_fill_pt_list_functional_1(status: t_test_status) : unit =
 ;;
 (*auteur : m�lie*)
 
+(* ---------------------------*)
+(* test de : drawfill_pt_list *)
+(* ---------------------------*)
+
 
 let test_drawfill_pt_list_functional_1(status: t_test_status) : unit =
   let test_step : t_test_step = test_start(status, "drawfill_pt_list_functional_1")
@@ -277,6 +281,38 @@ let test_drawfill_pt_list_functional_1(status: t_test_status) : unit =
         print_string("Voyez vous 3 carr�s rouge plein avec une bordure noire) (oui/non)");
         let reponse_9 : string = read_line() in
         assert_equals(test_step, "carr� noir plein", reponse_9, "oui")
+      )
+    else test_error(test_step);
+    test_end(test_step);
+    clear_graph();
+    set_color(black);
+  )
+;;
+(*auteur : nicolas *)
+
+(* ---------------------*)
+(* test de : draw_frame *)
+(* ---------------------*)
+(**
+fonction de test fonctionnel de fonction draw_frame qui affiche un cadre
+@param status recupere l'environnement de test
+@author MELIE
+
+ *)
+let test_draw_frame_functional_1(status: t_test_status) : unit =
+  let test_step : t_test_step = test_start(status, "test_draw_frame_functional_1") in
+
+  let test_result : unit t_test_result = test_exec(test_step, draw_frame, ({x = 0; y = 0},5,10, dilat)) in
+  (
+    if test_is_success(test_result)
+    then
+      (
+        set_color(black);
+        open_graph(350, 610);
+        draw_frame({x = 0; y = 0},5,10, dilat);        
+        print_string("Voyez vous cadre  qui delimite une zone d'affichage de (5,10) ) (oui/non)");
+        let reponse_10 : string = read_line() in
+        assert_equals(test_step, "cadre delimite une zone d'affichage de (5,10)", reponse_10, "oui")
       )
     else test_error(test_step);
     test_end(test_step);
@@ -308,6 +344,8 @@ let test_run() : unit =
     test_draw_pt_list_functional_1(alltests);
     test_fill_pt_list_functional_1(alltests);
     test_drawfill_pt_list_functional_1(alltests);
+    (*question4*)
+    test_draw_frame_functional_1(alltests);
 
     (* print des resultats de test (DOIT RESTER A LA FIN !!!) *)
     print_test_report(alltests)

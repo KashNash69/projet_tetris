@@ -1,12 +1,14 @@
-5;;(*pour ouvrir Ocaml*)
-(*graphique tï¿½tris
-taille carrï¿½ : 20
+open CPutil;;
+
+(*#use CPutil.ml *)(*pour ouvrir Ocaml*)
+(*graphique tetris
+taille carre : 20
 marge droite : 50
 marge gauche : 50
 marge bas : 50
 marge haut : 100
 taille bord de zone : 10
-grille du tï¿½tris = 320 610
+grille du tetris = 350 610
  *)
 
 (* -------------------------- *)
@@ -30,30 +32,80 @@ let mywait(x : float) : unit =
 
 
 (* Types *)
-type t_point = {x : int ; y : int} ;;
+(** 
+description de t_point
+*)
+type t_point = {
+    x : int (** coordonnee en x *);
+    y : int (** coordonnee en y *)
+  } ;;
 
-type 'a t_array = {len : int ; value : 'a array} ;;
+(** 
+description de 'a t_array
+*)
+type 'a t_array = {
+    len : int ;(** longueur de la liste*)
+    value : 'a array (** tableau de type 'a*)
+  } ;;
 
-type t_shape = {shape : t_point list ; x_len : int ; y_len : int ; 
-                rot_rgt_base : t_point ; rot_rgt_shape : int ; 
-                rot_lft_base : t_point ; rot_lft_shape : int} ;; 
+(** 
+description de t_shape
+*)
+type t_shape = {
+    shape : t_point list (** liste de point d'une certaine forme*);
+    x_len : int ;(** amplitude en x *)
+    y_len : int ;(** amplitude en y *)
+    rot_rgt_base : t_point ;(** forme r¨¦sultant d¡¯une rotation droite *)
+    rot_rgt_shape : int ; (** forme r¨¦sultant d¡¯une rotation droite *)
+    rot_lft_base : t_point ;(** forme r¨¦sultant d¡¯une rotation gauche *)
+    rot_lft_shape : int(** forme r¨¦sultant d¡¯une rotation gauche *)
+  } ;; 
 
-type t_cur_shape = {base : t_point ref ; shape : int ref ; color : t_color ref} ;;
+(** 
+description de t_cur_shape
+*)
+type t_cur_shape = {
+    base : t_point ref ;(** point de base de la forme dans l'espace de travail*)
+    shape : int ref ;(** indice de la forme dans le tableau contenant le descriptif de la forme *)
+    color : t_color ref (** couleur de la forme*)
+  } ;;
 
+(** 
+description de t_param_time
+*)
+type t_param_time = {
+    init : float ;
+    extent : float ;
+    ratio : float
+  } ;;
 
-type t_param_time = {init : float ; extent : float ; ratio : float} ;;
+(** 
+description de t_param_graphics
+*)
+type t_param_graphics ={
+    base : t_point ;
+    dilat : int ;
+    color_arr : t_color t_array
+  } ;;
 
-type t_param_graphics = 
-    {base : t_point ; dilat : int ; color_arr : t_color t_array} ;;
+(** 
+description de t_param
+*)
+type t_param ={
+    time : t_param_time ; 
+    mat_szx : int ; mat_szy : int ;
+    graphics : t_param_graphics ; 
+    shapes : t_shape t_array
+  } ;;
 
-type t_param = 
-  {time : t_param_time ; 
-   mat_szx : int ; mat_szy : int ;
-   graphics : t_param_graphics ; 
-   shapes : t_shape t_array
-} ;;
-
-type t_play = {par : t_param ; cur_shape : t_cur_shape ; mat : t_color matrix} ;;
+(** 
+description de t_play
+*)
+type t_play = {
+    par : t_param ;
+    cur_shape : t_cur_shape ;
+    mat : t_color matrix
+  } ;;
 
 
 (* Initialisation de quelques formes et des parametres *)
@@ -102,83 +154,166 @@ let init_param() : t_param =
 let dilat : int = 20 ;;
 (*notre base_draw prend (0,0) comme valeur donc on ne l'utilise pas dans la fonction convert*)
 
+(**
+description de convert
+@param p point dans la matrice de travail
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@return le resultat de convert dans la matrice graphique
+@author NICOLAS
+ *)
 let convert(p, base_draw, dilat : t_point * t_point * int) : t_point =
   {x = (p.x * dilat + 70); y = (p.y * dilat + 70)}
 ;;
-(*AUTEUR : NICOLAS*)
+
 
 (*QUESTION 1*)
-
+(**
+description de draw_absolute_pt
+@param p point dans la matrice de travail
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@param col couleur a utiliser
+@author NICOLAS
+ *)
 let draw_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_color ) : unit =
   set_color(col);
   let new_p : t_point = convert(p, base_draw, dilat) in
   draw_rect(new_p.x, new_p.y, dilat - 1, dilat - 1)
 ;;
-(*auteur : NICOLAS*)
 
+(**
+description de fill_absolute_pt
+@param p point dans la matrice de travail
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@param col couleur a utiliser
+@author NICOLAS
+ *)
 let fill_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_color ) : unit =
   set_color(col);
   let new_p : t_point = convert(p, base_draw, dilat) in
   fill_rect(new_p.x, new_p.y, dilat - 1, dilat - 1)
 ;;
-(*auteur : NICOLAS*)
 
+(**
+description de drawfill_absolute_pt
+@param p point dans la matrice de travail
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@param col couleur a utiliser
+@author PIERRE
+ *)
 let drawfill_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_color) : unit =
   fill_absolute_pt(p, base_draw, dilat, col);
   draw_absolute_pt(p, base_draw, dilat, 0)
 ;;
-(*auteur : PIERRE*)
+
 
 (*QUESTION 2*)
-
+(**
+description de draw_relative_pt
+@param p point dans la matrice de travail
+@param base_point point du debut du dessin desire
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@param col couleur a utiliser
+@author NICOLAS
+ *)
 let draw_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
   let new_p : t_point = {x = p.x + base_point.x ; y = p.y + base_point.y} in
   draw_absolute_pt(new_p, base_draw, dilat, col)
 ;;
-(*auteur : NICOLAS*)
 
+(**
+description de fill_relative_pt
+@param p point dans la matrice de travail
+@param base_point point du debut du dessin desire
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@param col couleur a utiliser
+@author PIERRE
+ *)
 let fill_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
   let new_p : t_point = {x = p.x + base_point.x ; y = p.y + base_point.y} in
   fill_absolute_pt(new_p, base_draw, dilat, col)
 ;;
-(*auteur: PIERRE*)
 
+(**
+description de drawfill_relative_pt
+@param p point dans la matrice de travail
+@param base_point point du debut du dessin desire
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@param col couleur a utiliser
+@author PIERRE
+ *)
 let drawfill_relative_pt(p, base_point,  base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
   fill_relative_pt(p, base_point, base_draw, dilat, col);
   draw_relative_pt(p, base_point, base_draw, dilat, 0)
 ;;
-(*auteur : PIERRE*)
 
 
 (*QUESTION 3*)
 
-let draw_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit =
+(**
+description de draw_pt_list
+@param p_list liste de points dans la matrice de travail
+@param base_point point du debut du dessin desire
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@param col couleur a utiliser
+@author NICOLAS
+ *)
+let draw_pt_list(pt_list, base_point, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit =
   (
     for i = 0 to len(pt_list) - 1 do
-      draw_relative_pt(nth(pt_list, i), base_pt, base_draw, dilat, col)
+      draw_relative_pt(nth(pt_list, i), base_point, base_draw, dilat, col)
     done;
   )
 ;;
-(*auteur :NICOLAS*)
 
-let fill_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit =
+(**
+description de fill_pt_list
+@param p_list liste de points dans la matrice de travail
+@param base_point point du debut du dessin desire
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@param col couleur a utiliser
+@author NICOLAS, PIERRE
+ *)
+let fill_pt_list(pt_list, base_point, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit =
   (
     for i = 0 to len(pt_list) - 1 do
-      fill_relative_pt(nth(pt_list, i), base_pt, base_draw, dilat, col)
+      fill_relative_pt(nth(pt_list, i), base_point, base_draw, dilat, col)
     done;
   )
 ;;
 
-(*auteur : NICOLAS-PIERRE*)
-
-let drawfill_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit=
-  fill_pt_list(pt_list,base_pt,base_draw,dilat,col);
-  draw_pt_list(pt_list,base_pt,base_draw,dilat,0)
+(**
+description de drawfill_pt_list
+@param p_list liste de points dans la matrice de travail
+@param base_point point du debut du dessin desire
+@param base_draw point de base de la matrice graphique
+@param dilat largeur de base d'un carre sur le graphique
+@param col couleur a utiliser
+@author PIERRE
+ *)
+let drawfill_pt_list(pt_list, base_point, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit=
+  fill_pt_list(pt_list,base_point,base_draw,dilat,col);
+  draw_pt_list(pt_list,base_point,base_draw,dilat,0)
 ;;
-(*auteur : PIERRE*)
 
-(*Question 4*)
 
+(* QUESTION 4*)
+(**
+description de draw_frame
+@param base_draw point de base de la matrice graphique
+@param size_x largeur de l'espace de travail voulu
+@param size_y hauteur de l'espace de travail voulu
+@param dilat largeur de base d'un carre sur le graphique
+@author LOUIS
+ *)
 let draw_frame(base_draw, size_x, size_y, dilat: t_point * int * int * int) : unit =
   let list_left : t_point list ref = ref [{x = 0; y = 0}]
   and list_right : t_point list ref = ref [{x = size_x; y = 0}]
@@ -193,8 +328,8 @@ let draw_frame(base_draw, size_x, size_y, dilat: t_point * int * int * int) : un
     for i = 1 to (size_x) do
       list_down := add_lst(!list_down, {x = i; y = 0})
     done;
-    let base_pt : t_point = {x = 0; y = 0}
-    and base_draw : t_point = {x = 0; y = 0} in
+    let base_pt : t_point = {x = 0; y = 0}in
+    (*and base_draw : t_point = {x = 0; y = 0} in*)
     (
       drawfill_pt_list(!list_left, base_pt, base_draw, dilat, black);
       drawfill_pt_list(!list_right, base_pt, base_draw, dilat, black);
@@ -229,14 +364,29 @@ let getParam(prm : t_play) : t_param = prm.par;;
 let getCurShape(prm : t_play) : t_cur_shape = prm.cur_shape;;
 let getMat(prm : t_play) : t_color matrix = prm.mat;;
 
+(* QUESTION 7*)
+(**
+description de color choice
+@param t tableau des couleurs possibles
+@author PIERRE, MELIE
+@return une couleur aleatoire du tableau t 
+*)
 let color_choice(t : t_color t_array) : t_color =
   let v : 'a array = getValue(t) and i : int = rand_int(0, getArrlen(t) - 1) in
   v.(i)
 ;;
 
-
-(*AUTEUR : Louis *)
-
+(* 
+let cur_shape_choice(shapes, mat_szx, mat_szy, color_arr : t_shape t_array * int * int * t_color t_array) :
+      t_cur_shape =
+  let shape : int ref = ref rand_int(1, getArrlen(shapes));
+      let shapes_value : 'a array = getValue(shapes) in
+      let base : t_point ref = ref {x= rand_int(mat_szx - getShapeXlen(shapes_value));
+                                     y = mat_szy - getShapeYlen(shapes_value)};
+      let color : t_color ref = ref color_choice(color_arr) in
+      {base = !base; shape = !shape; color = !color}
+;;(*auteur PIERRE*)
+ *)
 
 (* ----------------------------------------------- *)
 (* ----------------------------------------------- *)
