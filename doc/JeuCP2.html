@@ -16,7 +16,7 @@
 <h1>Module <a href="type_JeuCP2.html">JeuCP2</a></h1>
 
 <pre><span class="keyword">module</span> JeuCP2: <code class="code">sig</code> <a href="JeuCP2.html">..</a> <code class="code">end</code></pre><div class="info module top">
-description de t_point<br>
+descritption : point de l'environnement de travail<br>
 </div>
 <hr width="100%">
 
@@ -45,7 +45,7 @@ coordonnee en y<br>
 }
 
 <div class="info ">
-description de t_point<br>
+descritption : point de l'environnement de travail<br>
 </div>
 
 
@@ -114,7 +114,7 @@ amplitude en y<br>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_shape.rot_rgt_base">rot_rgt_base</span>&nbsp;: <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
-forme r¨¦sultant d¡¯une rotation droite<br>
+forme resultant d'une rotation droite<br>
 </div>
 </td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -124,7 +124,7 @@ forme r¨¦sultant d¡¯une rotation droite<br>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_shape.rot_rgt_shape">rot_rgt_shape</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
-forme r¨¦sultant d¡¯une rotation droite<br>
+forme resultant d'une rotation droite<br>
 </div>
 </td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -134,7 +134,7 @@ forme r¨¦sultant d¡¯une rotation droite<br>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_shape.rot_lft_base">rot_lft_base</span>&nbsp;: <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
-forme r¨¦sultant d¡¯une rotation gauche<br>
+forme resultant d'une rotation gauche<br>
 </div>
 </td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -144,7 +144,7 @@ forme r¨¦sultant d¡¯une rotation gauche<br>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_shape.rot_lft_shape">rot_lft_shape</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
-forme r¨¦sultant d¡¯une rotation gauche<br>
+forme resultant d'une rotation gauche<br>
 </div>
 </td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
@@ -199,21 +199,30 @@ description de t_cur_shape<br>
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param_time.init">init</span>&nbsp;: <code class="type">float</code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+duree initiale d'un deplacement<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param_time.extent">extent</span>&nbsp;: <code class="type">float</code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+duree entre 2 accelerations<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param_time.ratio">ratio</span>&nbsp;: <code class="type">float</code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+coefficient d'acceleration<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -228,21 +237,30 @@ description de t_param_time<br>
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param_graphics.base">base</span>&nbsp;: <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a></code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+origine de l'espace d'affichage<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param_graphics.dilat">dilat</span>&nbsp;: <code class="type">int</code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+taille d'un carre<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param_graphics.color_arr">color_arr</span>&nbsp;: <code class="type">CPutil.t_color <a href="JeuCP2.html#TYPEt_array">t_array</a></code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+tableau de couleur disponible<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -257,7 +275,10 @@ description de t_param_graphics<br>
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param.time">time</span>&nbsp;: <code class="type"><a href="JeuCP2.html#TYPEt_param_time">t_param_time</a></code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+parametre de temps<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
@@ -271,21 +292,30 @@ description de t_param_graphics<br>
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param.mat_szy">mat_szy</span>&nbsp;: <code class="type">int</code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+taille de la matrice de l'espace de travail<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param.graphics">graphics</span>&nbsp;: <code class="type"><a href="JeuCP2.html#TYPEt_param_graphics">t_param_graphics</a></code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+parametre graphique<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_param.shapes">shapes</span>&nbsp;: <code class="type"><a href="JeuCP2.html#TYPEt_shape">t_shape</a> <a href="JeuCP2.html#TYPEt_array">t_array</a></code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+tableau contenant les formes abstraites disponibles<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -300,21 +330,30 @@ description de t_param<br>
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_play.par">par</span>&nbsp;: <code class="type"><a href="JeuCP2.html#TYPEt_param">t_param</a></code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+parametre du jeu<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_play.cur_shape">cur_shape</span>&nbsp;: <code class="type"><a href="JeuCP2.html#TYPEt_cur_shape">t_cur_shape</a></code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+descriptif de la forme actuelle<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt_play.mat">mat</span>&nbsp;: <code class="type">CPutil.t_color CPutil.matrix</code>;</code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+matrice decrivant l'espace de travail<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -331,7 +370,7 @@ description de t_play<br>
 <pre><span id="VALinit_param"><span class="keyword">val</span> init_param</span> : <code class="type">unit -> <a href="JeuCP2.html#TYPEt_param">t_param</a></code></pre>
 <pre><span id="VALdilat"><span class="keyword">val</span> dilat</span> : <code class="type">int</code></pre>
 <pre><span id="VALconvert"><span class="keyword">val</span> convert</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int -> <a href="JeuCP2.html#TYPEt_point">t_point</a></code></pre><div class="info ">
-description de convert<br>
+description : convertie un point de l'esapce de travail en un point en pixel dans l'espace d'affichage<br>
 <b>Author(s):</b> NICOLAS<br>
 <b>Returns</b> le resultat de convert dans la matrice graphique<br>
 </div>
@@ -340,7 +379,7 @@ description de convert<br>
 <code>p</code> : point dans la matrice de travail</div>
 
 <pre><span id="VALdraw_absolute_pt"><span class="keyword">val</span> draw_absolute_pt</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int * CPutil.t_color -> unit</code></pre><div class="info ">
-description de draw_absolute_pt<br>
+description : dessine un carre de taille dilat d'une couleur choisie en un point choisie<br>
 <b>Author(s):</b> NICOLAS<br>
 </div>
 <div class="param_info"><code class="code">(p,base_draw,dilat,col)</code> : <code>col</code> : couleur a utiliser<br>
@@ -349,7 +388,7 @@ description de draw_absolute_pt<br>
 <code>p</code> : point dans la matrice de travail</div>
 
 <pre><span id="VALfill_absolute_pt"><span class="keyword">val</span> fill_absolute_pt</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int * CPutil.t_color -> unit</code></pre><div class="info ">
-description de fill_absolute_pt<br>
+description : dessine un carre plein de taille dilat d'une couleur choisie en un point choisie<br>
 <b>Author(s):</b> NICOLAS<br>
 </div>
 <div class="param_info"><code class="code">(p,base_draw,dilat,col)</code> : <code>col</code> : couleur a utiliser<br>
@@ -358,7 +397,7 @@ description de fill_absolute_pt<br>
 <code>p</code> : point dans la matrice de travail</div>
 
 <pre><span id="VALdrawfill_absolute_pt"><span class="keyword">val</span> drawfill_absolute_pt</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int * CPutil.t_color -> unit</code></pre><div class="info ">
-description de drawfill_absolute_pt<br>
+description : dessine un carre plein avec une bordure noir de taille dilat d'une couleur choisie en un point choisie<br>
 <b>Author(s):</b> PIERRE<br>
 </div>
 <div class="param_info"><code class="code">(p,base_draw,dilat,col)</code> : <code>col</code> : couleur a utiliser<br>
@@ -367,27 +406,27 @@ description de drawfill_absolute_pt<br>
 <code>p</code> : point dans la matrice de travail</div>
 
 <pre><span id="VALdraw_relative_pt"><span class="keyword">val</span> draw_relative_pt</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int * CPutil.t_color -><br>       unit</code></pre><div class="info ">
-description de draw_relative_pt<br>
+description : dessine un carre de taille dilat d'une couleur choisie<br>
 <b>Author(s):</b> NICOLAS<br>
 </div>
 <div class="param_info"><code class="code">(p,base_point,base_draw,dilat,col)</code> : <code>col</code> : couleur a utiliser<br>
 <code>dilat</code> : largeur de base d'un carre sur le graphique<br>
 <code>base_draw</code> : point de base de la matrice graphique<br>
-<code>base_point</code> : point du debut du dessin desire<br>
+<code>base_point</code> : point du debut du dessin voulue<br>
 <code>p</code> : point dans la matrice de travail</div>
 
 <pre><span id="VALfill_relative_pt"><span class="keyword">val</span> fill_relative_pt</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int * CPutil.t_color -><br>       unit</code></pre><div class="info ">
-description de fill_relative_pt<br>
+description : dessine un carre plein de taille dilat d'une couleur choisie<br>
 <b>Author(s):</b> PIERRE<br>
 </div>
 <div class="param_info"><code class="code">(p,base_point,base_draw,dilat,col)</code> : <code>col</code> : couleur a utiliser<br>
 <code>dilat</code> : largeur de base d'un carre sur le graphique<br>
 <code>base_draw</code> : point de base de la matrice graphique<br>
-<code>base_point</code> : point du debut du dessin desire<br>
+<code>base_point</code> : point du debut du dessin voulue<br>
 <code>p</code> : point dans la matrice de travail</div>
 
 <pre><span id="VALdrawfill_relative_pt"><span class="keyword">val</span> drawfill_relative_pt</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int * CPutil.t_color -><br>       unit</code></pre><div class="info ">
-description de drawfill_relative_pt<br>
+description : dessine un carre plein avec une bordure noir de taille dilat d'une couleur choisie<br>
 <b>Author(s):</b> PIERRE<br>
 </div>
 <div class="param_info"><code class="code">(p,base_point,base_draw,dilat,col)</code> : <code>col</code> : couleur a utiliser<br>
@@ -397,25 +436,25 @@ description de drawfill_relative_pt<br>
 <code>p</code> : point dans la matrice de travail</div>
 
 <pre><span id="VALdraw_pt_list"><span class="keyword">val</span> draw_pt_list</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> list * <a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int * CPutil.t_color -><br>       unit</code></pre><div class="info ">
-description de draw_pt_list<br>
+description : dessine une suite de carre qui forment une shape, ils ont tous la meme couleur et taille<br>
 <b>Author(s):</b> NICOLAS<br>
 </div>
 <div class="param_info"><code class="code">(pt_list,base_point,base_draw,dilat,col)</code> : <code>col</code> : couleur a utiliser<br>
 <code>dilat</code> : largeur de base d'un carre sur le graphique<br>
 <code>base_draw</code> : point de base de la matrice graphique<br>
-<code>base_point</code> : point du debut du dessin desire</div>
+<code>base_point</code> : point du debut du dessin voulue</div>
 
 <pre><span id="VALfill_pt_list"><span class="keyword">val</span> fill_pt_list</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> list * <a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int * CPutil.t_color -><br>       unit</code></pre><div class="info ">
-description de fill_pt_list<br>
+description : dessine une suite de carre plein qui forment une shape, ils ont tous la meme couleur et taille<br>
 <b>Author(s):</b> NICOLAS, PIERRE<br>
 </div>
 <div class="param_info"><code class="code">(pt_list,base_point,base_draw,dilat,col)</code> : <code>col</code> : couleur a utiliser<br>
 <code>dilat</code> : largeur de base d'un carre sur le graphique<br>
 <code>base_draw</code> : point de base de la matrice graphique<br>
-<code>base_point</code> : point du debut du dessin desire</div>
+<code>base_point</code> : point du debut du dessin voulue</div>
 
 <pre><span id="VALdrawfill_pt_list"><span class="keyword">val</span> drawfill_pt_list</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> list * <a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> * int * CPutil.t_color -><br>       unit</code></pre><div class="info ">
-description de drawfill_pt_list<br>
+description : dessine une suite de carre plein avec une bordure noir qui forment une shape, ils ont tous la meme couleur et taille<br>
 <b>Author(s):</b> PIERRE<br>
 </div>
 <div class="param_info"><code class="code">(pt_list,base_point,base_draw,dilat,col)</code> : <code>col</code> : couleur a utiliser<br>
@@ -424,7 +463,7 @@ description de drawfill_pt_list<br>
 <code>base_point</code> : point du debut du dessin desire</div>
 
 <pre><span id="VALdraw_frame"><span class="keyword">val</span> draw_frame</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * int * int * int -> unit</code></pre><div class="info ">
-description de draw_frame<br>
+description :dessine le cadre de base de l'espace graphique du tetris<br>
 <b>Author(s):</b> LOUIS<br>
 </div>
 <div class="param_info"><code class="code">(base_draw,size_x,size_y,dilat)</code> : <code>dilat</code> : largeur de base d'un carre sur le graphique<br>
@@ -455,7 +494,7 @@ description de draw_frame<br>
 <pre><span id="VALgetCurShape"><span class="keyword">val</span> getCurShape</span> : <code class="type"><a href="JeuCP2.html#TYPEt_play">t_play</a> -> <a href="JeuCP2.html#TYPEt_cur_shape">t_cur_shape</a></code></pre>
 <pre><span id="VALgetMat"><span class="keyword">val</span> getMat</span> : <code class="type"><a href="JeuCP2.html#TYPEt_play">t_play</a> -> CPutil.t_color CPutil.matrix</code></pre>
 <pre><span id="VALcolor_choice"><span class="keyword">val</span> color_choice</span> : <code class="type">CPutil.t_color <a href="JeuCP2.html#TYPEt_array">t_array</a> -> CPutil.t_color</code></pre><div class="info ">
-description de color choice<br>
+description : choisie une couleur aleatoirement dans une liste de couleur<br>
 <b>Author(s):</b> PIERRE, MELIE<br>
 <b>Returns</b> une couleur aleatoire du tableau t<br>
 </div>

@@ -12,7 +12,7 @@ open JeuCP2;;
 let test_convert_fonctional_1(status: t_test_status): unit =
   let test_step : t_test_step = test_start(status, "convert_fonctional_1")
   and p : t_point = {x = 2; y = 2} 
-  and p_sorti : t_point = {x = 100; y = 100} in
+  and p_sorti : t_point = {x = 110; y = 110} in
   let test_result : t_point t_test_result = test_exec(test_step, convert, (p, {x = 2; y = 2}, dilat)) in
   (
     if test_is_success(test_result)
@@ -321,7 +321,46 @@ let test_draw_frame_functional_1(status: t_test_status) : unit =
   )
 ;;
 
+let test_getArrLen_functionnal(status : t_test_status) : unit =
+  let test_step : t_test_step = test_start(status, "getArrlen functionnal")
+  and prm_1 : int t_array = {len = 12; value = arr_make(12, 0)}in
+  (
+    let test_result : int t_test_result = test_exec(test_step, getArrlen, prm_1) in
+    (
+      if test_is_success(test_result)
+      then
+        (
+          assert_equals(test_step, "la longueur est bien 12", test_get(test_result), 12)
+        )
+      else test_error(test_step);
+      test_end(test_step)
+    )
+  )
+;;
+(*author : Louis*)
 
+let test_color_choice_structural(status : t_test_status) : unit =
+  let test_step : t_test_step = test_start(status, "color_choice structural")
+  and all_colors : t_color array = [| black ; white ; blue ;
+red ; green ; yellow ; cyan ; magenta ; grey |]
+  and is_t_color(colors, result: t_color array * 'a): bool =
+    let colors_list : t_color list = list_of_array(colors) in
+    list_contains_value(colors_list, result)
+  in
+  (
+    let test_result : int t_test_result = test_exec(test_step, color_choice, all_colors) in
+    (
+      if test_is_success(test_result)
+      then
+        (
+          is_t_colors(test_get(test_result))
+        )
+      else test_error(test_step);
+      test_end(test_step)
+    )
+  )
+;;
+(*author : louis , melie*)
 
 
 (* ---------------------------- *)

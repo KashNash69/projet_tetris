@@ -1,4 +1,4 @@
-open CPutil;;
+(*open CPutil;;*)
 
 (*#use CPutil.ml *)(*pour ouvrir Ocaml*)
 (*graphique tetris
@@ -33,7 +33,7 @@ let mywait(x : float) : unit =
 
 (* Types *)
 (** 
-description de t_point
+descritption : point de l'environnement de travail
 *)
 type t_point = {
     x : int (** coordonnee en x *);
@@ -55,10 +55,10 @@ type t_shape = {
     shape : t_point list (** liste de point d'une certaine forme*);
     x_len : int ;(** amplitude en x *)
     y_len : int ;(** amplitude en y *)
-    rot_rgt_base : t_point ;(** forme r¨¦sultant d¡¯une rotation droite *)
-    rot_rgt_shape : int ; (** forme r¨¦sultant d¡¯une rotation droite *)
-    rot_lft_base : t_point ;(** forme r¨¦sultant d¡¯une rotation gauche *)
-    rot_lft_shape : int(** forme r¨¦sultant d¡¯une rotation gauche *)
+    rot_rgt_base : t_point ;(** forme resultant d'une rotation droite *)
+    rot_rgt_shape : int ; (** forme resultant d'une rotation droite *)
+    rot_lft_base : t_point ;(** forme resultant d'une rotation gauche *)
+    rot_lft_shape : int(** forme resultant d'une rotation gauche *)
   } ;; 
 
 (** 
@@ -74,37 +74,37 @@ type t_cur_shape = {
 description de t_param_time
 *)
 type t_param_time = {
-    init : float ;
-    extent : float ;
-    ratio : float
+    init : float ;(** duree initiale d'un deplacement*)
+    extent : float ;(**duree entre 2 accelerations*)
+    ratio : float(**coefficient d'acceleration*)
   } ;;
 
 (** 
 description de t_param_graphics
 *)
 type t_param_graphics ={
-    base : t_point ;
-    dilat : int ;
-    color_arr : t_color t_array
+    base : t_point ;(** origine de l'espace d'affichage*)
+    dilat : int ;(**taille d'un carre*)
+    color_arr : t_color t_array (** tableau de couleur disponible*)
   } ;;
 
 (** 
 description de t_param
 *)
 type t_param ={
-    time : t_param_time ; 
-    mat_szx : int ; mat_szy : int ;
-    graphics : t_param_graphics ; 
-    shapes : t_shape t_array
+    time : t_param_time ; (** parametre de temps *)
+    mat_szx : int ; mat_szy : int ;(**taille de la matrice de l'espace de travail*)
+    graphics : t_param_graphics ; (**parametre graphique*)
+    shapes : t_shape t_array(**tableau contenant les formes abstraites disponibles*)
   } ;;
 
 (** 
 description de t_play
 *)
 type t_play = {
-    par : t_param ;
-    cur_shape : t_cur_shape ;
-    mat : t_color matrix
+    par : t_param ;(** parametre du jeu*)
+    cur_shape : t_cur_shape ;(**descriptif de la forme actuelle *)
+    mat : t_color matrix(** matrice decrivant l'espace de travail*)
   } ;;
 
 
@@ -155,7 +155,7 @@ let dilat : int = 20 ;;
 (*notre base_draw prend (0,0) comme valeur donc on ne l'utilise pas dans la fonction convert*)
 
 (**
-description de convert
+description : convertie un point de l'esapce de travail en un point en pixel dans l'espace d'affichage 
 @param p point dans la matrice de travail
 @param base_draw point de base de la matrice graphique
 @param dilat largeur de base d'un carre sur le graphique
@@ -169,7 +169,7 @@ let convert(p, base_draw, dilat : t_point * t_point * int) : t_point =
 
 (*QUESTION 1*)
 (**
-description de draw_absolute_pt
+description : dessine un carre de taille dilat d'une couleur choisie en un point choisie
 @param p point dans la matrice de travail
 @param base_draw point de base de la matrice graphique
 @param dilat largeur de base d'un carre sur le graphique
@@ -183,7 +183,7 @@ let draw_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_colo
 ;;
 
 (**
-description de fill_absolute_pt
+description : dessine un carre plein de taille dilat d'une couleur choisie en un point choisie
 @param p point dans la matrice de travail
 @param base_draw point de base de la matrice graphique
 @param dilat largeur de base d'un carre sur le graphique
@@ -197,7 +197,7 @@ let fill_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_colo
 ;;
 
 (**
-description de drawfill_absolute_pt
+description : dessine un carre plein avec une bordure noir de taille dilat d'une couleur choisie en un point choisie
 @param p point dans la matrice de travail
 @param base_draw point de base de la matrice graphique
 @param dilat largeur de base d'un carre sur le graphique
@@ -212,9 +212,9 @@ let drawfill_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_
 
 (*QUESTION 2*)
 (**
-description de draw_relative_pt
+description : dessine un carre de taille dilat d'une couleur choisie 
 @param p point dans la matrice de travail
-@param base_point point du debut du dessin desire
+@param base_point point du debut du dessin voulue
 @param base_draw point de base de la matrice graphique
 @param dilat largeur de base d'un carre sur le graphique
 @param col couleur a utiliser
@@ -226,9 +226,9 @@ let draw_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * 
 ;;
 
 (**
-description de fill_relative_pt
+description : dessine un carre plein de taille dilat d'une couleur choisie 
 @param p point dans la matrice de travail
-@param base_point point du debut du dessin desire
+@param base_point point du debut du dessin voulue
 @param base_draw point de base de la matrice graphique
 @param dilat largeur de base d'un carre sur le graphique
 @param col couleur a utiliser
@@ -240,7 +240,7 @@ let fill_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * 
 ;;
 
 (**
-description de drawfill_relative_pt
+description : dessine un carre plein avec une bordure noir de taille dilat d'une couleur choisie
 @param p point dans la matrice de travail
 @param base_point point du debut du dessin desire
 @param base_draw point de base de la matrice graphique
@@ -257,9 +257,9 @@ let drawfill_relative_pt(p, base_point,  base_draw, dilat, col : t_point * t_poi
 (*QUESTION 3*)
 
 (**
-description de draw_pt_list
+description : dessine une suite de carre qui forment une shape, ils ont tous la meme couleur et taille
 @param p_list liste de points dans la matrice de travail
-@param base_point point du debut du dessin desire
+@param base_point point du debut du dessin voulue
 @param base_draw point de base de la matrice graphique
 @param dilat largeur de base d'un carre sur le graphique
 @param col couleur a utiliser
@@ -274,9 +274,9 @@ let draw_pt_list(pt_list, base_point, base_draw, dilat, col : t_point list * t_p
 ;;
 
 (**
-description de fill_pt_list
+description : dessine une suite de carre plein qui forment une shape, ils ont tous la meme couleur et taille
 @param p_list liste de points dans la matrice de travail
-@param base_point point du debut du dessin desire
+@param base_point point du debut du dessin voulue
 @param base_draw point de base de la matrice graphique
 @param dilat largeur de base d'un carre sur le graphique
 @param col couleur a utiliser
@@ -291,7 +291,7 @@ let fill_pt_list(pt_list, base_point, base_draw, dilat, col : t_point list * t_p
 ;;
 
 (**
-description de drawfill_pt_list
+description : dessine une suite de carre plein avec une bordure noir qui forment une shape, ils ont tous la meme couleur et taille
 @param p_list liste de points dans la matrice de travail
 @param base_point point du debut du dessin desire
 @param base_draw point de base de la matrice graphique
@@ -307,7 +307,7 @@ let drawfill_pt_list(pt_list, base_point, base_draw, dilat, col : t_point list *
 
 (* QUESTION 4*)
 (**
-description de draw_frame
+description :dessine le cadre de base de l'espace graphique du tetris
 @param base_draw point de base de la matrice graphique
 @param size_x largeur de l'espace de travail voulu
 @param size_y hauteur de l'espace de travail voulu
@@ -366,7 +366,7 @@ let getMat(prm : t_play) : t_color matrix = prm.mat;;
 
 (* QUESTION 7*)
 (**
-description de color choice
+description : choisie une couleur aleatoirement dans une liste de couleur 
 @param t tableau des couleurs possibles
 @author PIERRE, MELIE
 @return une couleur aleatoire du tableau t 
@@ -376,17 +376,24 @@ let color_choice(t : t_color t_array) : t_color =
   v.(i)
 ;;
 
-(* 
-let cur_shape_choice(shapes, mat_szx, mat_szy, color_arr : t_shape t_array * int * int * t_color t_array) :
-      t_cur_shape =
-  let shape : int ref = ref rand_int(1, getArrlen(shapes));
-      let shapes_value : 'a array = getValue(shapes) in
-      let base : t_point ref = ref {x= rand_int(mat_szx - getShapeXlen(shapes_value));
-                                     y = mat_szy - getShapeYlen(shapes_value)};
-      let color : t_color ref = ref color_choice(color_arr) in
-      {base = !base; shape = !shape; color = !color}
-;;(*auteur PIERRE*)
+(**
+Description: le but est d'obtenir une forme aleatoire qui doit apparaitre a une position aleatoire dans l'espace de travail et d'une couleur aleatoire de façon a ce que la forme apparaisse le plus haut possible dans l'espace d'affichage et ne dois pas depasser les cotes.
+@param shapes tableau contenant le nombre et les valeurs de chaque forme de type t_shape disponible
+@param mat_szx largeur de l'espace de travail 
+@param mat_szy hauteur de l'espace de travail
+@param color_arr tableau des couleurs disponibles
+@author PIERRE
  *)
+
+let cur_shape_choice(shapes, mat_szx, mat_szy, color_arr : t_shape t_array * int * int * t_color t_array) : t_cur_shape =
+  let select_shape : int ref = ref (rand_int(1, getArrlen(shapes))) in
+  let shapes_value : 'a array = getValue(shapes) in
+  let select_shape_value : t_shape = shapes_value.(!select_shape) in
+  let base : t_point ref = ref{x = rand_int(0, mat_szx - getShapeXlen(select_shape_value));
+                        y = mat_szy - getShapeYlen(select_shape_value)}; in
+  let color : t_color ref = ref (color_choice(color_arr)) in
+  {base = base; shape = select_shape; color = color}
+;;
 
 (* ----------------------------------------------- *)
 (* ----------------------------------------------- *)
