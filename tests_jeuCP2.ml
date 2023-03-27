@@ -1,13 +1,17 @@
 (*blabla test*)
 (*
-open CPinter;;
+open CPutil;;
 open JeuCP2;;
- *)
+ *) 
 
 (* ---------------------------- *)
 (* test de : convert            *)
 (* ---------------------------- *)
-
+(**
+fonction de test fonctionnel sur la fonction convert qui vérifie la conversion 
+@param status recupere l'environnement de test
+@author LOUIS
+ *)
 (* *)
 let test_convert_fonctional_1(status: t_test_status): unit =
   let test_step : t_test_step = test_start(status, "convert_fonctional_1")
@@ -21,12 +25,16 @@ let test_convert_fonctional_1(status: t_test_status): unit =
     test_end(test_step)
   )
 ;;
-(* auteur : Louis *)
+
 
 (* ---------------------------- *)
 (* test de : draw_absolute_pt   *)
 (* ---------------------------- *)
-
+(**
+fonction de test fonctionnel  sur la fonction graphique draw_absolute_pt qui vérifie en demandant à l'utilisateur s'il voit un carre noir en (2;2)
+@param status recupere l'environnement de test
+@author MELIE, LOUIS 
+ *)
 let test_draw_absolute_pt_functional_1(status: t_test_status) : unit =
   let test_step : t_test_step = test_start(status, "draw_absolute_pt_functional_1")
   and p : t_point = {x = 2; y = 2} in
@@ -49,15 +57,20 @@ let test_draw_absolute_pt_functional_1(status: t_test_status) : unit =
     test_end(test_step);
     clear_graph();
     set_color(black);
+
   )
 ;;
 
-(*auteurs : mï¿½lie et louis*)
+
 
 (* ---------------------------- *)
 (* test de : fill_absolute_pt   *)
 (* ---------------------------- *)
-
+(**
+fonction de test fonctionnel sur la fonction graphique fill_absolute_pt qui vérifie en demandant à l'utilisateur s'il voit un carre noir plein en (2;2)
+@param status recupere l'environnement de test
+@author MELIE, LOUIS
+ *)
 let test_fill_absolute_pt_functional_1(status: t_test_status) : unit =
   let test_step : t_test_step = test_start(status, "fill_absolute_pt_functional_1")
   and p : t_point = {x = 2; y = 2} in
@@ -82,11 +95,15 @@ let test_fill_absolute_pt_functional_1(status: t_test_status) : unit =
     set_color(black);
   )
 ;;
-(*auteurs : mï¿½lie et louis*)
+
 (* ---------------------------- *)
 (* test de :drawfill_absolute_pt*)
 (* ---------------------------- *)
-
+(**
+fonction de test fonctionnel sur la fonction graphique drawfill_absolute_pt qui vérifie en demandant à l'utilisateur s'il voit carre bleu plein avec une bordure noire en (2;2)
+@param status recupere l'environnement de test
+@author NICOLAS, MELIE
+ *)
 let test_drawfill_absolute_pt_functional_1(status: t_test_status) : unit =
   let test_step : t_test_step = test_start(status, "drawfill_absolute_pt_functional_1")
   and p : t_point = {x = 2; y = 2} in
@@ -111,11 +128,15 @@ let test_drawfill_absolute_pt_functional_1(status: t_test_status) : unit =
     set_color(black);
   )
 ;;
-(*auteur : NICOLAS et Mï¿½LIE*)
-(* ---------------------------- *)
-(*     test draw relative       *)
-(* ---------------------------- *)
 
+(* ------------------------------- *)
+(*     test draw_relative_pt       *)
+(* ------------------------------- *)
+(**
+fonction de test fonctionnel sur la fonction graphique draw_relative_pt qui vérifie en demandant à l'utilisateur s'il voit un carre bleu vide en (1;2)
+@param status recupere l'environnement de test
+@author NICOLAS, MELIE
+ *)
 let test_draw_relative_pt_functional_1(status: t_test_status) : unit =
   let test_step : t_test_step = test_start(status, "draw_relative_pt_functional_1")
   and p : t_point = {x = 1; y = 2} in
@@ -140,11 +161,15 @@ let test_draw_relative_pt_functional_1(status: t_test_status) : unit =
     set_color(black);
   )
 ;;
-(*auteur : NICOLAS et Mï¿½LIE*)
+
 (* ---------------------------*)
 (* test de : fill_relative_pt *)
 (* ---------------------------*)
-
+(**
+fonction de test fonctionnel sur la fonction graphique fill_relative_pt qui vérifie en demandant à l'utilisateur s'il voit un carre noir plein en (4;4)
+@param status recupere l'environnement de test
+@author MELIE
+ *)
 let test_fill_relative_pt_functional_1(status: t_test_status) : unit =
   let test_step : t_test_step = test_start(status, "fill_relative_pt_functional_1")
   and p : t_point = {x = 2; y = 2} in
@@ -169,11 +194,13 @@ let test_fill_relative_pt_functional_1(status: t_test_status) : unit =
     set_color(black);
   )
 ;;
-(*auteur : mï¿½lie*)
+
 (* ---------------------------- *)
 (*     test drawfill relative   *)
 (* ---------------------------- *)
-
+(**
+fonction test fonctionnel sur la fonction graphique
+ *)
 let test_drawfill_relative_pt_functional_1(status : t_test_status) : unit =
   let test_step : t_test_step = test_start(status, "drawfill_relative_pt_functional_1")
   and p : t_point = {x = 1; y = 1} in
@@ -339,29 +366,45 @@ let test_getArrLen_functionnal(status : t_test_status) : unit =
 ;;
 (*author : Louis*)
 
+
 let test_color_choice_structural(status : t_test_status) : unit =
   let test_step : t_test_step = test_start(status, "color_choice structural")
-  and all_colors : t_color array = [| black ; white ; blue ;
-red ; green ; yellow ; cyan ; magenta ; grey |]
-  and is_t_color(colors, result: t_color array * 'a): bool =
-    let colors_list : t_color list = list_of_array(colors) in
+  and all_colors : t_color t_array = {len = 9; value=[| black ; white ; blue ; red ; green ; yellow ; cyan ; magenta ; grey |]}
+  and is_t_color(colors, result: t_color t_array * 'a): bool =
+    let colors_list : t_color list = list_of_array(colors.value) in
     list_contains_value(colors_list, result)
   in
   (
     let test_result : int t_test_result = test_exec(test_step, color_choice, all_colors) in
     (
       if test_is_success(test_result)
-      then
-        (
-          is_t_colors(test_get(test_result))
-        )
+      then assert_true(test_step, "la couleur est bien comprise dans le tableau",is_t_color(all_colors, test_get(test_result)))
       else test_error(test_step);
       test_end(test_step)
     )
   )
 ;;
 (*author : louis , melie*)
-
+(*
+let test_cur_shape_choice_structural(status:t_test_status) : unit =
+  let test_step : t_test_step = test_start(status, "color_choice structural")
+  and all_shapes : t_shape t_array = {len = 3 ; value = [| init_sh011() ; init_sh112() ; init_sh211() |]}
+  and all_colors : t_color t_array = {len = 9; value=[| black ; white ; blue ; red ; green ; yellow ; cyan ; magenta ; grey |]}
+  and is_t_shape(shapes, result: t_shape t_array * 'a): bool =
+    let shapes_list : t_shape list = list_of_array(shapes.value) in
+    list_contains_value(shapes_list, all_shapes.value.(result))
+  in
+  (
+    let test_result : t_cur_shape t_test_result = test_exec(test_step, cur_shape_choice, (all_shapes, 10, 20, all_colors))in
+    (
+      if test_is_success(test_result)
+      then assert_true(test_step, "la forme est bien comprise dans le tableau",is_t_shape(all_shapes, getCurShape(test_get(test_result))))
+      else test_error(test_step);
+      test_end(test_step)
+    )
+  )
+;;
+*)
 
 (* ---------------------------- *)
 (*     fonction de test         *)
@@ -385,6 +428,8 @@ let test_run() : unit =
     test_drawfill_pt_list_functional_1(alltests);
     (*question4*)
     test_draw_frame_functional_1(alltests);
+    (*question 6*)
+    test_color_choice_structural(alltests);
 
     (* print des resultats de test (DOIT RESTER A LA FIN !!!) *)
     print_test_report(alltests)

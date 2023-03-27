@@ -8,7 +8,7 @@ marge gauche : 50
 marge bas : 50
 marge haut : 100
 taille bord de zone : 10
-grille du tetris = 350 610
+grille du tetris = 420 680
  *)
 
 (* -------------------------- *)
@@ -377,14 +377,13 @@ let color_choice(t : t_color t_array) : t_color =
 ;;
 
 (**
-Description: le but est d'obtenir une forme aleatoire qui doit apparaitre a une position aleatoire dans l'espace de travail et d'une couleur aleatoire de façon a ce que la forme apparaisse le plus haut possible dans l'espace d'affichage et ne dois pas depasser les cotes.
+Description: le but est d'obtenir une forme aleatoire qui doit apparaitre a une position aleatoire dans l'espace de travail et d'une couleur aleatoire de faï¿½on a ce que la forme apparaisse le plus haut possible dans l'espace d'affichage et ne dois pas depasser les cotes.
 @param shapes tableau contenant le nombre et les valeurs de chaque forme de type t_shape disponible
 @param mat_szx largeur de l'espace de travail 
 @param mat_szy hauteur de l'espace de travail
 @param color_arr tableau des couleurs disponibles
 @author PIERRE
  *)
-
 let cur_shape_choice(shapes, mat_szx, mat_szy, color_arr : t_shape t_array * int * int * t_color t_array) : t_cur_shape =
   let select_shape : int ref = ref (rand_int(1, getArrlen(shapes))) in
   let shapes_value : 'a array = getValue(shapes) in
@@ -394,6 +393,39 @@ let cur_shape_choice(shapes, mat_szx, mat_szy, color_arr : t_shape t_array * int
   let color : t_color ref = ref (color_choice(color_arr)) in
   {base = base; shape = select_shape; color = color}
 ;;
+
+(**
+description : la fonction verifie si la forme peut s'inserer dans l'espace d'affice en verifiant un par un chaque carre de la forme
+@param cur descriptif de la forme a verifier
+@param shape liste des aux points des autres carres a verifier
+@param param parametres
+@param my_mat matrice correspond a l'espace d'affichage en cours 
+@author PIERRE
+ *)
+let rec insert_aux(shape,param,my_mat : t_point list * t_param * t_color matrix) : bool =
+  if shape = []
+  then true
+  else
+    if my_mat.((fst(shape)).x).((fst(shape)).y) <> white
+    then false
+    else insert_aux(rem_fst(shape),param,my_mat)
+;;
+
+
+
+let insert(cur, shape, param, my_mat : t_cur_shape * t_point list * t_param * t_color matrix) : bool =
+let base : t_point ref = getCurBase(cur) in
+  insert_aux(add_fst(shape,!base),param,my_mat)
+;;
+
+(*
+let init_play(): t_play =
+  let mat = mat_make(15,28,white)in
+  let prm_init = init_param() in
+  
+;;
+*)
+
 
 (* ----------------------------------------------- *)
 (* ----------------------------------------------- *)
