@@ -240,9 +240,17 @@ let set_text_size(n : int) : unit =
   let s = "-*-courier-medium-r-*-*-"^string_of_int(n)^"-*"
   in Graphics.set_font s ;;
 
+type t_color = Graphics.color ;;
 
-
-
+let black : t_color = Graphics.black ;;
+let blue : t_color = Graphics.blue ;;
+let red : t_color = Graphics.red ;;
+let green : t_color = Graphics.green ;;
+let white : t_color = Graphics.white ;;
+let yellow : t_color = Graphics.yellow ;;
+let cyan : t_color = Graphics.cyan ;;
+let magenta : t_color = Graphics.magenta ;;
+let grey : t_color = 128 * 256 * 256 + 128 * 256 + 128 ;;
 
 let color_of_rgb(r, g, b : int * int * int) : t_color =
   let valid(x : int) : bool = ((0 <= x) && x <= 255) in
