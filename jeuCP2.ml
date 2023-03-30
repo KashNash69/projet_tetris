@@ -315,18 +315,18 @@ description :dessine le cadre de base de l'espace graphique du tetris
 @author LOUIS
  *)
 let draw_frame(base_draw, size_x, size_y, dilat: t_point * int * int * int) : unit =
-  let list_left : t_point list ref = ref [{x = 0; y = 0}]
-  and list_right : t_point list ref = ref [{x = size_x; y = 0}]
+  let list_left : t_point list ref = ref [{x = -1; y = -1}]
+  and list_right : t_point list ref = ref [{x = size_x - 1; y = -1}]
   and list_down : t_point list ref = ref [] in
   (
     for i = 1 to (size_y) do
       (
-        list_left := add_lst(!list_left, {x = 0; y = i});
-        list_right := add_lst(!list_right, {x = size_x; y = i})
+        list_left := add_lst(!list_left, {x = -1; y = i - 1});
+        list_right := add_lst(!list_right, {x = size_x-1 ; y = i - 1})
       )
     done;
     for i = 1 to (size_x) do
-      list_down := add_lst(!list_down, {x = i; y = 0})
+      list_down := add_lst(!list_down, {x = i -1 ; y = - 1})
     done;
     let base_pt : t_point = {x = 0; y = 0}in
     (*and base_draw : t_point = {x = 0; y = 0} in*)
@@ -357,7 +357,7 @@ let getGraphicDilat(prm : t_param_graphics) : int = prm.dilat;;
 let getGraphicColor(prm : t_param_graphics) : t_color t_array = prm.color_arr;;
 let getParamTime(prm : t_param) : t_param_time = prm.time;;
 let getSizeX(prm : t_param) : int = prm.mat_szx;;
-let getSiezY(prm : t_param) : int = prm.mat_szy;;
+let getSizeY(prm : t_param) : int = prm.mat_szy;;
 let getGraphics(prm : t_param) : t_param_graphics = prm.graphics;;
 let getShapes(prm : t_param) : t_shape t_array = prm.shapes;;
 let getParam(prm : t_play) : t_param = prm.par;;
@@ -400,6 +400,7 @@ description : la fonction verifie si la forme peut s'inserer dans l'espace d'aff
 @param shape liste des aux points des autres carres a verifier
 @param param parametres
 @param my_mat matrice correspond a l'espace d'affichage en cours 
+@return elle retourne true si la forme peut s'ins�rer, sinon false 
 @author PIERRE
  *)
 let rec insert_aux(shape,param,my_mat : t_point list * t_param * t_color matrix) : bool =
@@ -418,14 +419,88 @@ let base : t_point ref = getCurBase(cur) in
   insert_aux(add_fst(shape,!base),param,my_mat)
 ;;
 
+(** 
+description : initialise les parametres de jeu et choisi une shape al�atoire pour commencer le jeu 
+@auhtor NICOLAS
+@return renvoie les parametres de base pour le jeu, ouvre le graph et trace le cadre du tetris
+ *)
+let init_play(): t_play =
+  open_graph(457,800);
+  clear_graph();
+  draw_frame({x = 0; y=0},16,28,dilat);
+  let mat : t_color matrix = mat_make(15,28,white)in
+  let prm_init : t_param = init_param() in
+  let fstshp : t_cur_shape = cur_shape_choice(init_shapes(),getSizeX(prm_init),getSizeY(prm_init),init_color()) in
+  ({par = prm_init ; cur_shape = fstshp ; mat = mat});
+;;
+ (**
+description : la fonction verifie si la forme peut s'inserer dans l'espace d'affice en verifiant un par un chaque carre de la forme. Si la forme est dessiner dans l'espace d'affichage
+@param cur descriptif de la forme a verifier et a dessiner
+@param shape liste des aux points des autres carres a verifier
+@param param parametres
+@param my_mat matrice correspond a l'espace d'affichage en cours 
+@author PIERRE
+ *)
+let rec insert_aux(draw,shape,param,my_mat,col : unit * t_point list * t_param * t_color matrix * t_color) : bool =
+  if shape = []
+  then true
+  else
+    if my_mat.((fst(shape)).x).((fst(shape)).y) <> white
+    then false
+    else insert_aux(drawfill_relative_pt({x=0;y=0},{x=((fst(shape)).x);y=((fst(shape)).y)},{x=0;y=0},20,col),rem_fst(shape),param,my_mat,col)
+;;
+
+
+let insert(cur, shape, param, my_mat : t_cur_shape * t_point list * t_param * t_color matrix) : bool =
+  insert_aux((),add_fst(shape,!(getCurBase(cur))),param,my_mat,!(getCurColor(cur)))
+;;
+
 (*
 let init_play(): t_play =
   let mat = mat_make(15,28,white)in
   let prm_init = init_param() in
   
 ;;
-*)
+ *)
 
+
+(*Question 8*)
+
+(**
+description : la fonction verifie si un point p est valide par rapport aux dimensions de l’espace de travail contenus dans param
+@param p position du point a verifier
+@param param parametres contenant la taille de la matrice
+@author PIERRE
+ *)
+let valid_matrix_point(p, param : t_point * t_param) : bool =
+  if (p.x) < 0 || (p.x) > getSizeX(param) || (p.y) < 0 || (p.y) > getSizeY(param)
+  then false
+  else true
+;;
+
+(*
+(**
+description : la fonction verifie si une piece peut etre afficher dans l'espace d'affichage sans entrer en collision avec une piece deja existante
+@param p position du premier point a verifier
+@param shape liste des autres points a verifier
+@param my_mat matrice correspondant a l'espace d'affichage en cours
+@param param parametres
+@author PIERRE
+ *)
+let is_free_move(p, shape, my_mat, param : t_point * t_point list * t_color matrix * t_param) : bool =
+  let answer : bool ref = ref true in
+  let shape_list : t_point list ref  = ref (add_fst(shape,p)) in
+  (
+    while not ((!shape_list = []) || answer = ref false)
+    do
+      if my_mat.((fst(!shape_list)).x).((fst(!shape_list)).y) <> white
+      then shape_list := rem_fst(!shape_list)
+      else answer := false
+    done;
+    !(answer)
+  )
+;;
+*)                                         
 
 (* ----------------------------------------------- *)
 (* ----------------------------------------------- *)
