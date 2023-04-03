@@ -8,7 +8,7 @@ open JeuCP2;;
 (* test de : convert            *)
 (* ---------------------------- *)
 (**
-fonction de test fonctionnel de la fonction convert qui vérifie la conversion 
+fonction de test fonctionnel de la fonction convert qui verifie la conversion 
 @param status recupere l'environnement de test
 @author LOUIS
  *)
@@ -31,7 +31,7 @@ let test_convert_fonctional_1(status: t_test_status): unit =
 (* test de : draw_absolute_pt   *)
 (* ---------------------------- *)
 (**
-fonction de test fonctionnel de la fonction graphique draw_absolute_pt qui vérifie en demandant à l'utilisateur s'il voit un carre noir 
+fonction de test fonctionnel de la fonction graphique draw_absolute_pt qui verifie en demandant a l'utilisateur s'il voit un carre noir 
 @param status recupere l'environnement de test
 @author MELIE, LOUIS 
  *)
@@ -67,7 +67,7 @@ let test_draw_absolute_pt_functional_1(status: t_test_status) : unit =
 (* test de : fill_absolute_pt   *)
 (* ---------------------------- *)
 (**
-fonction de test fonctionnel de la fonction graphique fill_absolute_pt qui vérifie en demandant à l'utilisateur s'il voit un carre noir plein 
+fonction de test fonctionnel de la fonction graphique fill_absolute_pt qui verifie en demandant a l'utilisateur s'il voit un carre noir plein 
 @param status recupere l'environnement de test
 @author MELIE, LOUIS
  *)
@@ -100,7 +100,7 @@ let test_fill_absolute_pt_functional_1(status: t_test_status) : unit =
 (* test de :drawfill_absolute_pt*)
 (* ---------------------------- *)
 (**
-fonction de test fonctionnel de la fonction graphique drawfill_absolute_pt qui vérifie en demandant à l'utilisateur s'il voit carre bleu plein avec une bordure noire
+fonction de test fonctionnel de la fonction graphique drawfill_absolute_pt qui verifie en demandant a l'utilisateur s'il voit carre bleu plein avec une bordure noire
 @param status recupere l'environnement de test
 @author NICOLAS, MELIE
  *)
@@ -133,7 +133,7 @@ let test_drawfill_absolute_pt_functional_1(status: t_test_status) : unit =
 (*     test draw_relative_pt       *)
 (* ------------------------------- *)
 (**
-fonction de test fonctionnel de la fonction graphique draw_relative_pt qui vérifie en demandant à l'utilisateur s'il voit un carre bleu vide au coordonées de la base base_point et en fonction du vecteur p
+fonction de test fonctionnel de la fonction graphique draw_relative_pt qui verifie en demandant a l'utilisateur s'il voit un carre bleu vide au coordonees de la base base_point et en fonction du vecteur p
 @param status recupere l'environnement de test
 @author NICOLAS, MELIE
  *)
@@ -166,7 +166,7 @@ let test_draw_relative_pt_functional_1(status: t_test_status) : unit =
 (* test de : fill_relative_pt *)
 (* ---------------------------*)
 (**
-fonction de test fonctionnel de la fonction graphique fill_relative_pt qui vérifie en demandant à l'utilisateur s'il voit un carre noir plein au coordonées de la base base_point et en fonction du vecteur p
+fonction de test fonctionnel de la fonction graphique fill_relative_pt qui verifie en demandant a l'utilisateur s'il voit un carre noir plein au coordonees de la base base_point et en fonction du vecteur p
 @param status recupere l'environnement de test
 @author MELIE
  *)
@@ -199,7 +199,7 @@ let test_fill_relative_pt_functional_1(status: t_test_status) : unit =
 (*  test drawfill_relative_pt   *)
 (* ---------------------------- *)
 (**
-fonction test fonctionnel de la fonction graphique drawfill_relative_pt qui vérifie en demandant à l'utilisateur s'il voit un carre bleu plein avec des bordures noires au coordonées de la base base_point et en fonction du vecteur p
+fonction test fonctionnel de la fonction graphique drawfill_relative_pt qui verifie en demandant a l'utilisateur s'il voit un carre bleu plein avec des bordures noires au coordonees de la base base_point et en fonction du vecteur p
 @param status recupere l'environnement de test
 @author NICOLAS
  *)
@@ -232,7 +232,7 @@ let test_drawfill_relative_pt_functional_1(status : t_test_status) : unit =
 (*     test draw_pt_list        *)
 (* ---------------------------- *)
 (**
-fonction test fonctionel de la fonction graphique draw_pt_list qui vérifie en demandant à l'utilisateur s'il voit 3 carres noir vide à la suite 
+fonction test fonctionel de la fonction graphique draw_pt_list qui verifie en demandant a l'utilisateur s'il voit 3 carres noir vide a la suite 
 @param status recupere l'environnement de test
 @author NICOLAS
  *)
@@ -265,7 +265,7 @@ let test_draw_pt_list_functional_1(status : t_test_status) : unit =
 (* test de : fill_pt_list *)
 (* -----------------------*)
 (**
-fonction test fonction de la fonction graphique fill_pt_list qui vérifie en demandant à l'utilisateur s'il voit 3 carres rouge à la suite en donnant une forme
+fonction test fonction de la fonction graphique fill_pt_list qui verifie en demandant a l'utilisateur s'il voit 3 carres rouge a la suite en donnant une forme
 @param status recupere l'environnement de test
 @author MELIE
  *)
@@ -298,7 +298,7 @@ let test_fill_pt_list_functional_1(status: t_test_status) : unit =
 (* test de : drawfill_pt_list *)
 (* ---------------------------*)
 (**
-fonction test fonctionel de la fonction graphique drawfill_pt_list qui verifie en demandant à l'utilisateur s'il voit 3 carres rouge avec des bordures noire
+fonction test fonctionel de la fonction graphique drawfill_pt_list qui verifie en demandant a l'utilisateur s'il voit 3 carres rouge avec des bordures noire
 @param status recupere l'environnement de test
 @author NICOLAS
  *)
@@ -438,6 +438,57 @@ let test_cur_shape_choice_structural(status:t_test_status) : unit =
   )
 ;;
 *)
+
+(**
+fonction de test fonctionnel de la  fonction init_play qui ouvre l'environement de jeu et choisi une premiere forme alleatoirement
+@param status recupere l'environnement de test
+@author Louis
+ *)
+let test_init_play_fonctional_1(status : t_test_status) : unit =
+  let test_step : t_test_step = test_start(status, "init_play fonctional 1") in
+  (
+    let test_result : t_play t_test_result = test_exec(test_step, init_play, ()) in
+    (
+      if test_is_success(test_result)
+      then
+        (
+          print_string("Voyez vous l'espace de jeu totalement vierge ? (oui/non)");
+          let reponse : string = read_line() in
+          assert_equals(test_step, "Ouverture de l'espace de jeu", reponse, "oui")
+        )
+      else test_error(test_step);
+      test_end(test_step)
+    )
+  )
+;;
+
+(**
+fonction de test fonctionnel de la  fonction invert_aux qui verifie si une forme a la place d'apparaitre a l'ecrant et qui l'insert.
+@param status recupere l'environnement de test
+@author Louis
+ *)
+let test_insert_fonctional_1(status : t_test_status) : unit =
+  let test_step : t_test_step = test_start(status, "insert_aux fonctional 1")
+  and cur_1 : t_cur_shape =
+    {
+      base = ref {x = 7; y = 28};
+      shape = ref 011;
+      color = ref green
+    }
+  and shape_1 : t_point list = getShape(init_sh011())
+  and param_1 : t_param = init_param()
+  and my_mat_1 : t_color matrix = mat_make(15,28,white)
+  in
+  (
+    let test_result : bool t_test_result = test_exec(test_step, insert, (cur_1, shape_1, param_1, my_mat_1)) in
+    (
+      if test_is_success(test_result)
+      then assert_equals(test_step, "la forme peut etre inseree", test_get(test_result), true)
+      else test_error(test_step);
+      test_end(test_step)
+    )
+  )
+;;
 
 (* ---------------------------- *)
 (*     fonction de test         *)

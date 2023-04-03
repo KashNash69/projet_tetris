@@ -1,6 +1,3 @@
-(*open CPutil;;*)
-
-(*#use CPutil.ml *)(*pour ouvrir Ocaml*)
 (*graphique tetris
 taille carre : 20
 marge droite : 50
@@ -8,7 +5,7 @@ marge gauche : 50
 marge bas : 50
 marge haut : 100
 taille bord de zone : 10
-grille du tetris = 420 680
+grille du tetris = 452*800 
  *)
 
 (* -------------------------- *)
@@ -347,7 +344,7 @@ let getShape(prm : t_shape) : t_point list = prm.shape;;
 let getShapeXlen(prm : t_shape) : int = prm.x_len;;
 let getShapeYlen(prm : t_shape) : int = prm.y_len;;
 let getCurBase(prm : t_cur_shape) : t_point ref = prm.base;;
-let getCurShape(prm : t_cur_shape) : int ref = prm.shape;;
+let getintShape(prm : t_cur_shape) : int ref = prm.shape;;
 let getCurColor(prm : t_cur_shape) : t_color ref = prm.color;;
 let getInitTime(prm : t_param_time) : float = prm.init;;
 let getExtentTime(prm : t_param_time) : float = prm.extent;;
@@ -421,7 +418,7 @@ let base : t_point ref = getCurBase(cur) in
 
 (** 
 description : initialise les parametres de jeu et choisi une shape al�atoire pour commencer le jeu 
-@auhtor NICOLAS
+@author NICOLAS
 @return renvoie les parametres de base pour le jeu, ouvre le graph et trace le cadre du tetris
  *)
 let init_play(): t_play =
@@ -433,35 +430,6 @@ let init_play(): t_play =
   let fstshp : t_cur_shape = cur_shape_choice(init_shapes(),getSizeX(prm_init),getSizeY(prm_init),init_color()) in
   ({par = prm_init ; cur_shape = fstshp ; mat = mat});
 ;;
- (**
-description : la fonction verifie si la forme peut s'inserer dans l'espace d'affice en verifiant un par un chaque carre de la forme. Si la forme est dessiner dans l'espace d'affichage
-@param cur descriptif de la forme a verifier et a dessiner
-@param shape liste des aux points des autres carres a verifier
-@param param parametres
-@param my_mat matrice correspond a l'espace d'affichage en cours 
-@author PIERRE
- *)
-let rec insert_aux(draw,shape,param,my_mat,col : unit * t_point list * t_param * t_color matrix * t_color) : bool =
-  if shape = []
-  then true
-  else
-    if my_mat.((fst(shape)).x).((fst(shape)).y) <> white
-    then false
-    else insert_aux(drawfill_relative_pt({x=0;y=0},{x=((fst(shape)).x);y=((fst(shape)).y)},{x=0;y=0},20,col),rem_fst(shape),param,my_mat,col)
-;;
-
-
-let insert(cur, shape, param, my_mat : t_cur_shape * t_point list * t_param * t_color matrix) : bool =
-  insert_aux((),add_fst(shape,!(getCurBase(cur))),param,my_mat,!(getCurColor(cur)))
-;;
-
-(*
-let init_play(): t_play =
-  let mat = mat_make(15,28,white)in
-  let prm_init = init_param() in
-  
-;;
- *)
 
 
 (*Question 8*)
@@ -502,12 +470,21 @@ let is_free_move(p, shape, my_mat, param : t_point * t_point list * t_color matr
 ;;
 *)                                         
 
+
 (* ----------------------------------------------- *)
 (* ----------------------------------------------- *)
 (*    Deplacements et controle des deplacements    *)
 (* ----------------------------------------------- *)
 (* ----------------------------------------------- *)
-
+let rotate_right(pl : t_play) : unit =
+  let current : t_cur_shape = getCurShape(pl)in
+  let color : t_color ref = getCurColor(current)in
+  let base : t_point ref = getCurBase(current)in
+  let shape : t_shape = init_shapes().[!getCurShape(current)]in
+  let new_shape : t_shape = init_shapes().[shape.rot_rgt_shape]in
+  let new_base : t_point = init_shapes().[shape.rot_rgt_base]in
+  drawfill_pt_list(new_shape.shape, new_base, {x=0;y=0}, dilat, !color)
+  ;;
 
 (*
 (* choix des deplacements suivant le caractere saisi *)

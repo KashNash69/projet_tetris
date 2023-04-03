@@ -487,7 +487,7 @@ description :dessine le cadre de base de l'espace graphique du tetris<br>
 <pre><span id="VALgetGraphicColor"><span class="keyword">val</span> getGraphicColor</span> : <code class="type"><a href="JeuCP2.html#TYPEt_param_graphics">t_param_graphics</a> -> CPutil.t_color <a href="JeuCP2.html#TYPEt_array">t_array</a></code></pre>
 <pre><span id="VALgetParamTime"><span class="keyword">val</span> getParamTime</span> : <code class="type"><a href="JeuCP2.html#TYPEt_param">t_param</a> -> <a href="JeuCP2.html#TYPEt_param_time">t_param_time</a></code></pre>
 <pre><span id="VALgetSizeX"><span class="keyword">val</span> getSizeX</span> : <code class="type"><a href="JeuCP2.html#TYPEt_param">t_param</a> -> int</code></pre>
-<pre><span id="VALgetSiezY"><span class="keyword">val</span> getSiezY</span> : <code class="type"><a href="JeuCP2.html#TYPEt_param">t_param</a> -> int</code></pre>
+<pre><span id="VALgetSizeY"><span class="keyword">val</span> getSizeY</span> : <code class="type"><a href="JeuCP2.html#TYPEt_param">t_param</a> -> int</code></pre>
 <pre><span id="VALgetGraphics"><span class="keyword">val</span> getGraphics</span> : <code class="type"><a href="JeuCP2.html#TYPEt_param">t_param</a> -> <a href="JeuCP2.html#TYPEt_param_graphics">t_param_graphics</a></code></pre>
 <pre><span id="VALgetShapes"><span class="keyword">val</span> getShapes</span> : <code class="type"><a href="JeuCP2.html#TYPEt_param">t_param</a> -> <a href="JeuCP2.html#TYPEt_shape">t_shape</a> <a href="JeuCP2.html#TYPEt_array">t_array</a></code></pre>
 <pre><span id="VALgetParam"><span class="keyword">val</span> getParam</span> : <code class="type"><a href="JeuCP2.html#TYPEt_play">t_play</a> -> <a href="JeuCP2.html#TYPEt_param">t_param</a></code></pre>
@@ -498,4 +498,54 @@ description : choisie une couleur aleatoirement dans une liste de couleur<br>
 <b>Author(s):</b> PIERRE, MELIE<br>
 <b>Returns</b> une couleur aleatoire du tableau t<br>
 </div>
+
+<pre><span id="VALcur_shape_choice"><span class="keyword">val</span> cur_shape_choice</span> : <code class="type"><a href="JeuCP2.html#TYPEt_shape">t_shape</a> <a href="JeuCP2.html#TYPEt_array">t_array</a> * int * int * CPutil.t_color <a href="JeuCP2.html#TYPEt_array">t_array</a> -><br>       <a href="JeuCP2.html#TYPEt_cur_shape">t_cur_shape</a></code></pre><div class="info ">
+Description: le but est d'obtenir une forme aleatoire qui doit apparaitre a une position aleatoire dans l'espace de travail et d'une couleur aleatoire de fa�on a ce que la forme apparaisse le plus haut possible dans l'espace d'affichage et ne dois pas depasser les cotes.<br>
+<b>Author(s):</b> PIERRE<br>
+</div>
+<div class="param_info"><code class="code">(shapes,mat_szx,mat_szy,color_arr)</code> : <code>color_arr</code> : tableau des couleurs disponibles<br>
+<code>mat_szy</code> : hauteur de l'espace de travail<br>
+<code>mat_szx</code> : largeur de l'espace de travail<br>
+<code>shapes</code> : tableau contenant le nombre et les valeurs de chaque forme de type t_shape disponible</div>
+
+<pre><span id="VALinsert_aux"><span class="keyword">val</span> insert_aux</span> : <code class="type">unit * <a href="JeuCP2.html#TYPEt_point">t_point</a> list * <a href="JeuCP2.html#TYPEt_param">t_param</a> * CPutil.t_color CPutil.matrix *<br>       CPutil.t_color -> bool</code></pre><div class="info ">
+description : la fonction verifie si la forme peut s'inserer dans l'espace d'affice en verifiant un par un chaque carre de la forme<br>
+<b>Author(s):</b> PIERRE<br>
+<b>Returns</b> elle retourne true si la forme peut s'ins�rer, sinon false<br>
+</div>
+<div class="param_info"><code class="code">(draw,shape,param,my_mat,col)</code> : <code>my_mat</code> : matrice correspond a l'espace d'affichage en cours<br>
+<code>param</code> : parametres<br>
+<code>shape</code> : liste des aux points des autres carres a verifier</div>
+
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type"><a href="JeuCP2.html#TYPEt_cur_shape">t_cur_shape</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> list * <a href="JeuCP2.html#TYPEt_param">t_param</a> *<br>       CPutil.t_color CPutil.matrix -> bool</code></pre>
+<pre><span id="VALinit_play"><span class="keyword">val</span> init_play</span> : <code class="type">unit -> <a href="JeuCP2.html#TYPEt_play">t_play</a></code></pre><div class="info ">
+description : initialise les parametres de jeu et choisi une shape al�atoire pour commencer le jeu<br>
+<b>Author(s):</b> NICOLAS<br>
+<b>Returns</b> renvoie les parametres de base pour le jeu, ouvre le graph et trace le cadre du tetris<br>
+</div>
+
+<pre><span id="VALinsert_aux"><span class="keyword">val</span> insert_aux</span> : <code class="type">unit * <a href="JeuCP2.html#TYPEt_point">t_point</a> list * <a href="JeuCP2.html#TYPEt_param">t_param</a> * CPutil.t_color CPutil.matrix *<br>       CPutil.t_color -> bool</code></pre><div class="info ">
+description : la fonction verifie si la forme peut s'inserer dans l'espace d'affice en verifiant un par un chaque carre de la forme. Si la forme est dessiner dans l'espace d'affichage<br>
+<b>Author(s):</b> PIERRE<br>
+</div>
+<div class="param_info"><code class="code">(draw,shape,param,my_mat,col)</code> : <code>my_mat</code> : matrice correspond a l'espace d'affichage en cours<br>
+<code>param</code> : parametres<br>
+<code>shape</code> : liste des aux points des autres carres a verifier</div>
+
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type"><a href="JeuCP2.html#TYPEt_cur_shape">t_cur_shape</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> list * <a href="JeuCP2.html#TYPEt_param">t_param</a> *<br>       CPutil.t_color CPutil.matrix -> bool</code></pre>
+<pre><span id="VALvalid_matrix_point"><span class="keyword">val</span> valid_matrix_point</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_param">t_param</a> -> bool</code></pre><div class="info ">
+description : la fonction verifie si un point p est valide par rapport aux dimensions de l’espace de travail contenus dans param<br>
+<b>Author(s):</b> PIERRE<br>
+</div>
+<div class="param_info"><code class="code">(p,param)</code> : <code>param</code> : parametres contenant la taille de la matrice<br>
+<code>p</code> : position du point a verifier</div>
+
+<pre><span id="VALis_free_move"><span class="keyword">val</span> is_free_move</span> : <code class="type"><a href="JeuCP2.html#TYPEt_point">t_point</a> * <a href="JeuCP2.html#TYPEt_point">t_point</a> list * CPutil.t_color CPutil.matrix *<br>       <a href="JeuCP2.html#TYPEt_param">t_param</a> -> bool</code></pre><div class="info ">
+description : la fonction verifie si une piece peut etre afficher dans l'espace d'affichage sans entrer en collision avec une piece deja existante<br>
+<b>Author(s):</b> PIERRE<br>
+</div>
+<div class="param_info"><code class="code">(p,shape,my_mat,param)</code> : <code>param</code> : parametres<br>
+<code>my_mat</code> : matrice correspondant a l'espace d'affichage en cours<br>
+<code>shape</code> : liste des autres points a verifier<br>
+<code>p</code> : position du premier point a verifier</div>
 </body></html>
