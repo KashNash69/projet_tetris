@@ -1,8 +1,7 @@
-(*blabla test*)
 (*
 open CPutil;;
 open JeuCP2;;
- *) 
+ *)
 
 (* ---------------------------- *)
 (* test de : convert            *)
@@ -44,7 +43,6 @@ let test_draw_absolute_pt_functional_1(status: t_test_status) : unit =
     then
       (
         set_color(black);
-        open_graph(350, 610);
         fill_rect(50, 50, 10, 450);
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
@@ -80,7 +78,7 @@ let test_fill_absolute_pt_functional_1(status: t_test_status) : unit =
     then
       (
         set_color(black);
-        open_graph(350, 610);
+        clear_graph();
         fill_rect(50, 50, 10, 450);
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
@@ -113,7 +111,6 @@ let test_drawfill_absolute_pt_functional_1(status: t_test_status) : unit =
     then
       (
         set_color(black);
-        open_graph(350, 610);
         fill_rect(50, 50, 10, 450);
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
@@ -146,7 +143,6 @@ let test_draw_relative_pt_functional_1(status: t_test_status) : unit =
     then
       (
         set_color(black);
-        open_graph(350, 610);
         fill_rect(50, 50, 10, 450);
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
@@ -179,7 +175,6 @@ let test_fill_relative_pt_functional_1(status: t_test_status) : unit =
     then
       (
         set_color(black);
-        open_graph(350, 610);
         fill_rect(50, 50, 10, 450);
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
@@ -245,7 +240,6 @@ let test_draw_pt_list_functional_1(status : t_test_status) : unit =
     then
       (
         set_color(black);
-        open_graph(350, 610);
         fill_rect(50, 50, 10, 450);
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
@@ -278,7 +272,6 @@ let test_fill_pt_list_functional_1(status: t_test_status) : unit =
     then
       (
         set_color(black);
-        open_graph(350, 610);
         fill_rect(50, 50, 10, 450);
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
@@ -311,7 +304,6 @@ let test_drawfill_pt_list_functional_1(status: t_test_status) : unit =
     then
       (
         set_color(black);
-        open_graph(350, 610);
         fill_rect(50, 50, 10, 450);
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
@@ -346,7 +338,6 @@ let test_draw_frame_functional_1(status: t_test_status) : unit =
     then
       (
         set_color(black);
-        open_graph(350, 610);
         draw_frame({x = 0; y = 0},5,10, dilat);        
         print_string("Voyez vous cadre  qui delimite une zone d'affichage de (5,10) (oui/non)");
         let reponse_10 : string = read_line() in
@@ -402,10 +393,13 @@ let test_color_choice_structural(status : t_test_status) : unit =
     list_contains_value(colors_list, result)
   in
   (
-    let test_result : int t_test_result = test_exec(test_step, color_choice, all_colors) in
+    let test_result : t_color t_test_result = test_exec(test_step, color_choice, all_colors) in
     (
       if test_is_success(test_result)
-      then assert_true(test_step, "la couleur est bien comprise dans le tableau",is_t_color(all_colors, test_get(test_result)))
+      then
+        (
+          assert_true(test_step, "la couleur est bien comprise dans le tableau",is_t_color(all_colors, test_get(test_result)))
+        )
       else test_error(test_step);
       test_end(test_step)
     )
@@ -415,15 +409,19 @@ let test_color_choice_structural(status : t_test_status) : unit =
 
 (* -----------------------------*)
 (*  test de : cur_shape_choice  *)
-(* ------------------------------*)
+(* -----------------------------*)
 
-
-(*
+(**
+fonction de test structural de la fonction cur_shape_choice qui verifie qu'on obtient bien une shape aleatoire dans le tableau t_shape t_array
+@param status recupere l'environnement de test
+@author LOUIS, MELIE
+ *)
 let test_cur_shape_choice_structural(status:t_test_status) : unit =
-  let test_step : t_test_step = test_start(status, "color_choice structural")
+  let test_step : t_test_step = test_start(status, "cur_shape_choice structural")
   and all_shapes : t_shape t_array = {len = 3 ; value = [| init_sh011() ; init_sh112() ; init_sh211() |]}
   and all_colors : t_color t_array = {len = 9; value=[| black ; white ; blue ; red ; green ; yellow ; cyan ; magenta ; grey |]}
-  and is_t_shape(shapes, result: t_shape t_array * 'a): bool =
+  in
+  let is_t_shape(shapes, result: t_shape t_array * 'a): bool =
     let shapes_list : t_shape list = list_of_array(shapes.value) in
     list_contains_value(shapes_list, all_shapes.value.(result))
   in
@@ -431,18 +429,24 @@ let test_cur_shape_choice_structural(status:t_test_status) : unit =
     let test_result : t_cur_shape t_test_result = test_exec(test_step, cur_shape_choice, (all_shapes, 10, 20, all_colors))in
     (
       if test_is_success(test_result)
-      then assert_true(test_step, "la forme est bien comprise dans le tableau",is_t_shape(all_shapes, getCurShape(test_get(test_result))))
+      then
+        (
+          assert_true(test_step, "la forme est bien comprise dans le tableau",is_t_shape(all_shapes, !(getintShape(test_get(test_result)))))
+        )
       else test_error(test_step);
       test_end(test_step)
     )
   )
 ;;
-*)
+
+(* -----------------------*)
+(*  test de : _init_play  *)
+(* -----------------------*)
 
 (**
 fonction de test fonctionnel de la  fonction init_play qui ouvre l'environement de jeu et choisi une premiere forme alleatoirement
 @param status recupere l'environnement de test
-@author Louis
+@author LOUIS
  *)
 let test_init_play_fonctional_1(status : t_test_status) : unit =
   let test_step : t_test_step = test_start(status, "init_play fonctional 1") in
@@ -452,27 +456,34 @@ let test_init_play_fonctional_1(status : t_test_status) : unit =
       if test_is_success(test_result)
       then
         (
+          set_color(black);
           print_string("Voyez vous l'espace de jeu totalement vierge ? (oui/non)");
-          let reponse : string = read_line() in
-          assert_equals(test_step, "Ouverture de l'espace de jeu", reponse, "oui")
+          let reponse_11 : string = read_line() in
+          assert_equals(test_step, "Ouverture de l'espace de jeu", reponse_11, "oui")
         )
       else test_error(test_step);
-      test_end(test_step)
+      test_end(test_step);
+      clear_graph();
+      set_color(black);
     )
   )
 ;;
 
+(* ------------------*)
+(*  test de : insert *)
+(* ------------------*)
+
 (**
 fonction de test fonctionnel de la  fonction invert_aux qui verifie si une forme a la place d'apparaitre a l'ecrant et qui l'insert.
 @param status recupere l'environnement de test
-@author Louis
+@author LOUIS
  *)
 let test_insert_fonctional_1(status : t_test_status) : unit =
-  let test_step : t_test_step = test_start(status, "insert_aux fonctional 1")
+  let test_step : t_test_step = test_start(status, "insert fonctional 1")
   and cur_1 : t_cur_shape =
     {
       base = ref {x = 7; y = 28};
-      shape = ref 011;
+      shape = ref 0;
       color = ref green
     }
   and shape_1 : t_point list = getShape(init_sh011())
@@ -483,7 +494,10 @@ let test_insert_fonctional_1(status : t_test_status) : unit =
     let test_result : bool t_test_result = test_exec(test_step, insert, (cur_1, shape_1, param_1, my_mat_1)) in
     (
       if test_is_success(test_result)
-      then assert_equals(test_step, "la forme peut etre inseree", test_get(test_result), true)
+      then
+        (
+          assert_equals(test_step, "la forme peut etre inseree", test_get(test_result), true)
+        )
       else test_error(test_step);
       test_end(test_step)
     )
@@ -497,7 +511,7 @@ let test_insert_fonctional_1(status : t_test_status) : unit =
 let test_run() : unit =
   let alltests : t_test_status = create_test_status() in
   (
-    open_graph(350,610);
+    open_graph(452,800);
     test_convert_fonctional_1(alltests);
     (*question1*)
     test_draw_absolute_pt_functional_1(alltests);
@@ -514,10 +528,14 @@ let test_run() : unit =
     (*question4*)
     test_draw_frame_functional_1(alltests);
     (*question 6*)
+    test_getArrLen_functionnal(alltests);
+    (*question 7*)
     test_color_choice_structural(alltests);
+    test_cur_shape_choice_structural(alltests);
+    test_init_play_fonctional_1(alltests);
+    test_insert_fonctional_1(alltests);
 
-    (* print des resultats de test (DOIT RESTER A LA FIN !!!) *)
+    (*print des resultats de test DOIT RESTER A LA FIN !!!*)
     print_test_report(alltests)
   )
 ;;
-

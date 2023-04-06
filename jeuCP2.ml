@@ -7,7 +7,7 @@ marge haut : 100
 taille bord de zone : 10
 grille du tetris = 452*800 
  *)
-
+(*open CPutil;;*)
 (* -------------------------- *)
 (* -------------------------- *)
 (*    fonctions utilitaires   *)
@@ -397,10 +397,10 @@ description : la fonction verifie si la forme peut s'inserer dans l'espace d'aff
 @param shape liste des aux points des autres carres a verifier
 @param param parametres
 @param my_mat matrice correspond a l'espace d'affichage en cours 
-@return elle retourne true si la forme peut s'ins�rer, sinon false 
+@return elle retourne true si la forme peut s'insérer, sinon false 
 @author PIERRE
  *)
-let rec insert_aux(shape, param, my_mat: t_point list t_param * t_color matrix) : bool =
+let rec insert_aux(shape, param, my_mat: t_point list * t_param * t_color matrix) : bool =
   if shape = []
   then true
   else
@@ -411,6 +411,16 @@ let rec insert_aux(shape, param, my_mat: t_point list t_param * t_color matrix) 
       ||(fst(shape)).y > getSizeY(param)
     then false
     else insert_aux(rem_fst(shape),param,my_mat)
+;;
+
+let insert(cur, shape, param, my_mat : t_cur_shape * t_point list * t_param * t_color matrix) : bool =
+  if insert_aux(add_fst(shape,!(getCurBase(cur))),param,my_mat)
+  then
+    (
+      drawfill_relative_pt({x=0;y=0},{x=((fst(shape)).x);y=((fst(shape)).y)},{x=0;y=0},20, !(getCurColor(cur)));
+    true
+    )
+  else false
 ;;
 
 (** 
@@ -437,13 +447,10 @@ description : la fonction verifie si un point p est valide par rapport aux dimen
 @param param parametres contenant la taille de la matrice
 @author PIERRE
  *)
-let valid_matrix_point(p, param : t_point * t_param) : bool =
-  if (p.x) < 0 || (p.x) > getSizeX(param) || (p.y) < 0 || (p.y) > getSizeY(param)
-  then false
-  else true
+let valid_matrix_point(p, param : t_point * t_param) : bool = not((p.x) < 0 || (p.x) > getSizeX(param) || (p.y) < 0 || (p.y) > getSizeY(param))
 ;;
 
-(*
+
 (**
 description : la fonction verifie si une piece peut etre afficher dans l'espace d'affichage sans entrer en collision avec une piece deja existante
 @param p position du premier point a verifier
@@ -458,14 +465,14 @@ let is_free_move(p, shape, my_mat, param : t_point * t_point list * t_color matr
   (
     while not ((!shape_list = []) || answer = ref false)
     do
-      if my_mat.((fst(!shape_list)).x).((fst(!shape_list)).y) <> white
-      then shape_list := rem_fst(!shape_list)
-      else answer := false
+      if my_mat.((fst(!shape_list)).x).((fst(!shape_list)).y) = white || valid_matrix_point(fst(!shape_list),param) = false
+      then answer := false
+      else shape_list := rem_fst(!shape_list)
     done;
     !(answer)
   )
 ;;
-*)                                         
+                                       
 
 
 (* ----------------------------------------------- *)
@@ -473,15 +480,83 @@ let is_free_move(p, shape, my_mat, param : t_point * t_point list * t_color matr
 (*    Deplacements et controle des deplacements    *)
 (* ----------------------------------------------- *)
 (* ----------------------------------------------- *)
+
 let rotate_right(pl : t_play) : unit =
-  let current : t_cur_shape = getCurShape(pl)in
-  let color : t_color ref = getCurColor(current)in
-  let base : t_point ref = getCurBase(current)in
-  let shape : t_shape = init_shapes().[!getCurShape(current)]in
-  let new_shape : t_shape = init_shapes().[shape.rot_rgt_shape]in
-  let new_base : t_point = init_shapes().[shape.rot_rgt_base]in
-  drawfill_pt_list(new_shape.shape, new_base, {x=0;y=0}, dilat, !color)
-  ;;
+  let current_shape : t_cur_shape = getCurShape(pl) in
+  let color : t_color = !(getCurColor(current_shape))
+  and current_base : t_point = !(getCurBase(current_shape))
+  and indice_cur_shape : int = !(getintShape(current_shape)) in
+  let initshapes : t_shape t_array = init_shapes() in
+  let tab_shapes : t_shape array = initshapes.value in
+  let indice_rotate : int = (tab_shapes.(indice_cur_shape)).rot_rgt_shape in
+  let base_rotate : t_point = (tab_shapes.(indice_cur_shape)).rot_rgt_base in
+  let new_shape : t_shape = tab_shapes.(indice_rotate) in
+  let new_base : t_point = {x = current_base.x + base_rotate.x ; y = current_base.y + base_rotate.y} in
+  if is_free_move(new_base, new_shape.shape, getMat(pl), getParam(pl))
+  then
+   (
+    drawfill_pt_list((tab_shapes.(indice_cur_shape)).shape, current_base, {x = 0; y = 0}, dilat, white);
+    drawfill_pt_list(new_shape.shape, new_base, {x = 0; y = 0}, dilat, color)
+    )
+  else ()
+;;
+
+let rotate_left(pl : t_play) : unit =
+  let current_shape : t_cur_shape = getCurShape(pl) in
+  let color : t_color = !(getCurColor(current_shape))
+  and current_base : t_point = !(getCurBase(current_shape))
+  and indice_cur_shape : int = !(getintShape(current_shape)) in
+  let initshapes : t_shape t_array = init_shapes() in
+  let tab_shapes : t_shape array = initshapes.value in
+  let indice_rotate : int = (tab_shapes.(indice_cur_shape)).rot_lft_shape in
+  let base_rotate : t_point = (tab_shapes.(indice_cur_shape)).rot_lft_base in
+  let new_shape : t_shape = tab_shapes.(indice_rotate) in
+  let new_base : t_point = {x = current_base.x + base_rotate.x ; y = current_base.y + base_rotate.y} in
+  if is_free_move(new_base, new_shape.shape, getMat(pl), getParam(pl))
+  then
+    (
+    drawfill_pt_list((tab_shapes.(indice_cur_shape)).shape, current_base, {x = 0; y = 0}, dilat, white);
+    drawfill_pt_list(new_shape.shape, new_base, {x = 0; y = 0}, dilat, color)
+    )
+  else ()
+;;
+
+let move_left(pl :t_play) : unit =
+  let current_shape : t_cur_shape = getCurShape(pl) in
+  let color : t_color = !(getCurColor(current_shape))
+  and current_base : t_point = !(getCurBase(current_shape))
+  and indice_cur_shape : int = !(getintShape(current_shape)) in
+  let initshapes : t_shape t_array = init_shapes() in
+  let tab_shapes : t_shape array = getValue(initshapes) in
+  let shapelist : t_point list = getShape(tab_shapes.(indice_cur_shape)) in
+  let new_base : t_point = {x = current_base.x - 1; y = current_base.y - 1} in
+  if is_free_move(new_base, shapelist, getMat(pl), getParam(pl))
+  then
+    (
+    drawfill_pt_list(shapelist, current_base, {x = 0; y = 0}, dilat, white);
+    drawfill_pt_list(shapelist, new_base, {x = 0; y = 0}, dilat, color)
+    )
+  else () 
+;;
+
+let move_right(pl :t_play) : unit =
+  let current_shape : t_cur_shape = getCurShape(pl) in
+  let color : t_color = !(getCurColor(current_shape))
+  and current_base : t_point = !(getCurBase(current_shape))
+  and indice_cur_shape : int = !(getintShape(current_shape)) in
+  let initshapes : t_shape t_array = init_shapes() in
+  let tab_shapes : t_shape array = getValue(initshapes) in
+  let shapelist : t_point list = getShape(tab_shapes.(indice_cur_shape)) in
+  let new_base : t_point = {x = current_base.x + 1; y = current_base.y + 1} in
+  if is_free_move(new_base, shapelist, getMat(pl), getParam(pl))
+  then
+    (
+    drawfill_pt_list(shapelist, current_base, {x = 0; y = 0}, dilat, white);
+    drawfill_pt_list(shapelist, new_base, {x = 0; y = 0}, dilat, color)
+    )
+  else () 
+;;
+
 
 (*
 (* choix des deplacements suivant le caractere saisi *)
