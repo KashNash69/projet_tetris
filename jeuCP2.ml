@@ -400,20 +400,17 @@ description : la fonction verifie si la forme peut s'inserer dans l'espace d'aff
 @return elle retourne true si la forme peut s'ins�rer, sinon false 
 @author PIERRE
  *)
-let rec insert_aux(shape,param,my_mat : t_point list * t_param * t_color matrix) : bool =
+let rec insert_aux(shape, param, my_mat: t_point list t_param * t_color matrix) : bool =
   if shape = []
   then true
   else
-    if my_mat.((fst(shape)).x).((fst(shape)).y) <> white
+    if my_mat.((fst(shape)).x).((fst(shape)).y) <> white 
+      ||(fst(shape)).x  < 0 
+      ||(fst(shape)).x  > getSizeX(param) 
+      ||(fst(shape)).y  < 0 
+      ||(fst(shape)).y > getSizeY(param)
     then false
     else insert_aux(rem_fst(shape),param,my_mat)
-;;
-
-
-
-let insert(cur, shape, param, my_mat : t_cur_shape * t_point list * t_param * t_color matrix) : bool =
-let base : t_point ref = getCurBase(cur) in
-  insert_aux(add_fst(shape,!base),param,my_mat)
 ;;
 
 (** 
