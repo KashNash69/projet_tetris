@@ -480,7 +480,10 @@ let is_free_move(p, shape, my_mat, param : t_point * t_point list * t_color matr
 (*    Deplacements et controle des deplacements    *)
 (* ----------------------------------------------- *)
 (* ----------------------------------------------- *)
-
+(**description : effectue si possible une rotation de la pièce actuelle vers la droite
+@param pl descriptif des paramètres du jeu, de la forme actuelle et de la matrice décrivant l'espace de travail
+@author NICOLAS
+ *)
 let rotate_right(pl : t_play) : unit =
   let current_shape : t_cur_shape = getCurShape(pl) in
   let color : t_color = !(getCurColor(current_shape))
@@ -500,7 +503,10 @@ let rotate_right(pl : t_play) : unit =
     )
   else ()
 ;;
-
+(**description : effectue si possible une rotation de la pièce actuelle vers la gauche
+@param pl descriptif des paramètres du jeu, de la forme actuelle et de la matrice décrivant l'espace de travail
+@author NICOLAS
+ *)
 let rotate_left(pl : t_play) : unit =
   let current_shape : t_cur_shape = getCurShape(pl) in
   let color : t_color = !(getCurColor(current_shape))
@@ -520,7 +526,10 @@ let rotate_left(pl : t_play) : unit =
     )
   else ()
 ;;
-
+(**description : effectue si possible un déplacement de la pièce acutelle vers la gauche
+@param pl descriptif des paramètres du jeu, de la forme actuelle et de la matrice décrivant l'espace de travail
+@author NICOLAS/PIERRE
+ *)
 let move_left(pl :t_play) : unit =
   let current_shape : t_cur_shape = getCurShape(pl) in
   let color : t_color = !(getCurColor(current_shape))
@@ -538,7 +547,10 @@ let move_left(pl :t_play) : unit =
     )
   else () 
 ;;
-
+(**description : effectue si possible un déplacement de la pièce acutelle vers la droite
+@param pl descriptif des paramètres du jeu, de la forme actuelle et de la matrice décrivant l'espace de travail
+@author NICOLAS/PIERRE
+ *)
 let move_right(pl :t_play) : unit =
   let current_shape : t_cur_shape = getCurShape(pl) in
   let color : t_color = !(getCurColor(current_shape))
